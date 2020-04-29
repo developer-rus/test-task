@@ -121,7 +121,7 @@ class MatchBuilder
             $match->addMessage(
                 $this->buildMinuteString($period, $event),
                 $event['description'],
-                $this->buildMessageType($event)
+                $this->buildMessageType($event, $match)
             );
         }
     }
@@ -135,14 +135,20 @@ class MatchBuilder
         return $additionalTime > 0 ? "$periodEnd + $additionalTime" : $time;
     }
 
-    private function buildMessageType(array $event): string
+    private function buildMessageType(array $event,Match $match): string
     {
         switch ($event['type']) {
             case 'dangerousMoment':
                 return Match::DANGEROUS_MOMENT_MESSAGE_TYPE;
             case 'yellowCard':
+                $team = $this->getTeamByName($match, $event['details']['team']);
+                $team->getPlayer($event['details']['playerNumber'])->addCard(Match::YELLOW_CARD_MESSAGE_TYPE);
+
                 return Match::YELLOW_CARD_MESSAGE_TYPE;
             case 'redCard':
+                $team = $this->getTeamByName($match, $event['details']['team']);
+                $team->getPlayer($event['details']['playerNumber'])->addCard(Match::RED_CARD_MESSAGE_TYPE);
+
                 return Match::RED_CARD_MESSAGE_TYPE;
             case 'goal':
                 return Match::GOAL_MESSAGE_TYPE;

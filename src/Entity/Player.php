@@ -10,6 +10,7 @@ class Player
     private string $name;
     private string $playStatus;
     private array $goals;
+    private array $cards;
     private int $inMinute;
     private int $outMinute;
 
@@ -19,6 +20,7 @@ class Player
         $this->name = $name;
         $this->playStatus = self::BENCH_PLAY_STATUS;
         $this->goals = [];
+        $this->cards = [];
         $this->inMinute = 0;
         $this->outMinute = 0;
     }
@@ -41,6 +43,16 @@ class Player
     public function getGoals(): array
     {
         return $this->goals;
+    }
+
+    public function addCard($card): void
+    {
+        $this->cards[] = $card;
+    }
+
+    public function getCards(): array
+    {
+        return $this->cards;
     }
 
     public function getInMinute(): int

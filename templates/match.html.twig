@@ -124,6 +124,13 @@
                             {% for goal in player.goals %}
                                 <img src="https://www.soccer.ru/sites/all/themes/newtheme/images/events-icons/goal.png">
                             {% endfor %}
+                            {% for card in player.cards %}
+                                {% if card == constant('App\\Entity\\Match::YELLOW_CARD_MESSAGE_TYPE') %}
+                                    <img src="https://www.soccer.ru/sites/all/themes/newtheme/images/events-icons/card.png">
+                                {% elseif card == constant('App\\Entity\\Match::RED_CARD_MESSAGE_TYPE') %}
+                                    <img src="https://www.soccer.ru/sites/all/themes/newtheme/images/events-icons/yellow_red.png">
+                                {% endif %}
+                            {% endfor %}
                         </td>
                         <td>
                             {{ player.playTime }}’
