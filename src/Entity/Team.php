@@ -73,6 +73,23 @@ class Team
         );
     }
 
+    public function getPositionTime(): array
+    {
+        $positionTime = [];
+        foreach ($this->players as $player) {
+            if ($player->getPosition() === "Н") {
+                $positionTime["Нападающий"] += $player->getPlayTime();
+            } elseif ($player->getPosition() === "П") {
+                $positionTime["Полузащитник"] += $player->getPlayTime();
+            } elseif ($player->getPosition() === "З") {
+                $positionTime["Защитник"] += $player->getPlayTime();
+            } elseif ($player->getPosition() === "В") {
+                $positionTime["Вратарь"] += $player->getPlayTime();
+            }
+        }
+        return $positionTime;
+    }
+
     public function getCoach(): string
     {
         return $this->coach;
